@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Innet Media Concept - Transforming Ideas into Compelling Visual Stories</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lobster&family=Open+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-primary: #9B59B6;
+            --color-accent: #E91E63;
+            --color-bg: #FFF;
+            --color-text: #2C3E50;
+            --font-display: 'Lobster', cursive;
+            --font-body: 'Open Sans', sans-serif;
+            --border-radius: 16px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-body);
+            color: var(--color-text);
+            background-color: var(--color-bg);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(24px);
+            }
+            to {
+                opacity: 1;
+                transform: none;
+            }
+        }
+
+        nav {
+            position: sticky;
+            top: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 5%;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            animation: fadeUp 0.6s ease forwards;
+        }
+
+        .logo {
+            font-family: var(--font-display);
+            font-size: 1.8rem;
+            color: var(--color-primary);
+            font-weight: bold;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--color-text);
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--color-primary);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 5px;
+            z-index: 1001;
+        }
+
+        .mobile-menu-btn span {
+            width: 28px;
+            height: 3px;
+            background: var(--color-text);
+            transition: all 0.3s ease;
+            transform-origin: center;
+            border-radius: 2px;
+        }
+
+        .mobile-menu-btn.active span:nth-child(1) {
+            transform: rotate(45deg) translate(7px, 7px);
+        }
+
+        .mobile-menu-btn.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .mobile-menu-btn.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -7px);
+        }
+
+        .mobile-menu {
+            position: fixed;
+            top: 70px;
+            right: -100%;
+            width: 300px;
+            height: calc(100vh - 70px);
+            background: var(--color-bg);
+            box-shadow: -2px 0 15px rgba(0,0,0,0.2);
+            transition: right 0.3s ease;
+            z-index: 999;
+            padding: 2rem;
+        }
+
+        .mobile-menu.active {
+            right: 0;
+        }
+
+        .mobile-menu ul {
+            list-style: none;
+        }
+
+        .mobile-menu ul li {
+            margin-bottom: 1.5rem;
+        }
+
+        .mobile-menu ul a {
+            text-decoration: none;
+            color: var(--color-text);
+            font-size: 1.1rem;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            display: block;
+            padding: 0.5rem 0;
+        }
+
+        .mobile-menu ul a:hover {
+            color: var(--color-primary);
+        }
+
+        section {
+            padding: 80px 5%;
+            animation: fadeUp 0.6s ease forwards;
+        }
+
+        section:nth-child(2) { animation-delay: 0.1s; }
+        section:nth-child(3) { animation-delay: 0.2s; }
+        section:nth-child(4) { animation-delay: 0.3s; }
+        section:nth-child(5) { animation-delay: 0.4s; }
+        section:nth-child(6) { animation-delay: 0.5s; }
+        section:nth-child(7) { animation-delay: 0.6s; }
+        section:nth-child(8) { animation-delay: 0.7s; }
+
+        .hero {
+            position: relative;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            overflow: hidden;
+            animation: fadeUp 0.6s ease forwards;
+        }
+
+        .hero-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 0;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.55);
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 900px;
+            padding: 0 20px;
+        }
+
+        .hero h1 {
+            font-family: var(--font-display);
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            color: white;
+        }
+
+        .hero .tagline {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            font-weight: 300;
+            color: rgba(255,255,255,0.95);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            margin-bottom: 2rem;
+            color: rgba(255,255,255,0.9);
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            background: var(--color-accent);
+            color: white;
+            text-decoration: none;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 15px rgba(233, 30, 99, 0.4);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(233, 30, 99, 0.6);
+        }
+
+        h2 {
+            font-family: var(--font-display);
+            font-size: 3rem;
+            color: var(--color-primary);
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .about-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .about-image {
+            width: 100%;
+            height: 500px;
+            object-fit: cover;
+            border-radius: var(--border-radius);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+
+        .about-text p {
+            font-size: 1.1rem;
+            line-height: 1.9;
+            color: var(--color-text);
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2.5rem;
+            max-width: 1200px;
+            margin: 3rem auto 0;
+        }
+
+        .service-card {
+            background: linear-gradient(135deg, rgba(155, 89, 182, 0.05), rgba(233, 30, 99, 0.05));
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-left: 4px solid var(--color-primary);
+        }
+
+        .service-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 10px 30px rgba(155, 89, 182, 0.2);
+        }
+
+        .service-card h3 {
+            font-family: var(--font-display);
+            font-size: 1.6rem;
+            color: var(--color-accent);
+            margin-bottom: 1rem;
+        }
+
+        .service-card p {
+            font-size: 1rem;
+            line-height: 1.8;
+        }
+
+        .portfolio-section {
+            background: linear-gradient(135deg, rgba(155, 89, 182, 0.03), rgba(233, 30, 99, 0.03));
+        }
+
+        .portfolio-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .portfolio-content p {
+            font-size: 1.15rem;
+            line-height: 1.9;
+            margin-bottom: 2rem;
+        }
+
+        .portfolio-image {
+            width: 100%;
+            max-width: 900px;
+            height: 500px;
+            object-fit: cover;
+            border-radius: var(--border-radius);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+            margin: 2rem auto;
+            display: block;
+        }
+
+        .why-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+            max-width: 1200px;
+            margin: 3rem auto 0;
+        }
+
+        .why-card {
+            background: white;
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+            border-top: 3px solid var(--color-accent);
+        }
+
+        .why-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .why-card h3 {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            color: var(--color-primary);
+            margin-bottom: 1rem;
+        }
+
+        .why-card p {
+            font-size: 1rem;
+            line-height: 1.8;
+        }
+
+        .process-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .process-step {
+            background: white;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            border-left: 5px solid var(--color-primary);
+            transition: transform 0.3s ease;
+        }
+
+        .process-step:hover {
+            transform: translateX(10px);
+        }
+
+        .process-step h3 {
+            font-family: var(--font-display);
+            font-size: 1.7rem;
+            color: var(--color-accent);
+            margin-bottom: 1rem;
+        }
+
+        .process-step p {
+            font-size: 1.05rem;
+            line-height: 1.8;
+        }
+
+        .contact-section {
+            background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+            color: white;
+            text-align: center;
+        }
+
+        .contact-section h2 {
+            color: white;
+        }
+
+        .contact-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .contact-content p {
+            font-size: 1.15rem;
+            line-height: 1.9;
+            margin-bottom: 2rem;
+        }
+
+        .contact-methods {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+
+        .contact-method {
+            background: rgba(255,255,255,0.15);
+            padding: 1.5rem 2.5rem;
+            border-radius: var(--border-radius);
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s ease, background 0.3s ease;
+            text-decoration: none;
+            color: white;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .contact-method:hover {
+            background: rgba(255,255,255,0.25);
+            transform: translateY(-5px);
+        }
+
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #25D366;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.5);
+            text-decoration: none;
+            z-index: 998;
+            transition: transform 0.3s ease;
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+        }
+
+        footer {
+            background: var(--color-text);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            font-size: 0.95rem;
+        }
+
+        @media (max-width: 1024px) {
+            section {
+                padding: 60px 4%;
+            }
+
+            .hero h1 {
+                font-size: 3rem;
+            }
+
+            .hero .tagline {
+                font-size: 1.5rem;
+            }
+
+            h2 {
+                font-size: 2.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: flex;
+            }
+
+            section {
+                padding: 48px 5%;
+            }
+
+            .hero {
+                height: 100vh;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero .tagline {
+                font-size: 1.3rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            h2 {
+                font-size: 2rem;
+            }
+
+            .about-container {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .about-image {
+                height: 350px;
+            }
+
+            .services-grid,
+            .why-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .portfolio-image {
+                height: 300px;
+            }
+
+            .contact-methods {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .whatsapp-float {
+                width: 55px;
+                height: 55px;
+                bottom: 20px;
+                right: 20px;
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="logo">Innet Media Concept</div>
+        <ul class="nav-links">
+            <li><a href="#hero">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#portfolio">Portfolio</a></li>
+            <li><a href="#why-choose-us">Why Us</a></li>
+            <li><a href="#process">Process</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+        <div class="mobile-menu-btn">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </nav>
+
+    <div class="mobile-menu">
+        <ul>
+            <li><a href="#hero">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#portfolio">Portfolio</a></li>
+            <li><a href="#why-choose-us">Why Us</a></li>
+            <li><a href="#process">Process</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </div>
+
+    <section id="hero" class="hero">
+        <img src="https://images.pexels.com/photos/35073808/pexels-photo-35073808.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" alt="Innet Media Concept Studio" class="hero-image">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1>Innet Media Concept</h1>
+            <p class="tagline">Transforming Ideas into Compelling Visual Stories</p>
+            <p>Welcome to Innet Media Concept – Your trusted partner for professional multimedia services and consultancy in Nigeria. We bring your brand to life through creative storytelling, cutting-edge video production, and strategic media solutions that captivate your audience and drive results.</p>
+            <a href="#contact" class="cta-button">Get Started</a>
+        </div>
+    </section>
+
+    <section id="about">
+        <h2>About Us</h2>
+        <div class="about-container">
+            <img src="https://images.pexels.com/photos/8412361/pexels-photo-8412361.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" alt="Innet Media Concept Team" class="about-image">
+            <div class="about-text">
+                <p>Innet Media Concept is a leading multimedia services and consultancy firm dedicated to helping Nigerian businesses and organizations communicate effectively through powerful visual content. With expertise spanning video production, photography, graphic design, animation, and media strategy, we deliver end-to-end solutions tailored to your unique needs. Our team of creative professionals combines technical excellence with deep understanding of the Nigerian market to produce content that resonates with your target audience. Whether you're launching a product, building brand awareness, or telling your corporate story, we transform your vision into compelling multimedia experiences that leave lasting impressions.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="services">
+        <h2>Our Services</h2>
+        <div class="services-grid">
+            <div class="service-card">
+                <h3>Video Production & Cinematography</h3>
+                <p>From corporate documentaries to promotional videos, commercials, and event coverage, we deliver broadcast-quality video content that tells your story with impact. Our production services include pre-production planning, filming, and post-production editing.</p>
+            </div>
+            <div class="service-card">
+                <h3>Photography Services</h3>
+                <p>Professional photography for corporate events, product shoots, portraits, and brand campaigns. We capture stunning images that enhance your visual identity and marketing materials.</p>
+            </div>
+            <div class="service-card">
+                <h3>Graphic Design & Branding</h3>
+                <p>Creative design solutions including logo design, brand identity development, marketing collaterals, social media graphics, and print materials that make your brand stand out.</p>
+            </div>
+            <div class="service-card">
+                <h3>Animation & Motion Graphics</h3>
+                <p>Engage your audience with captivating 2D and 3D animations, explainer videos, and motion graphics that simplify complex messages and enhance visual storytelling.</p>
+            </div>
+            <div class="service-card">
+                <h3>Media Consultancy</h3>
+                <p>Strategic guidance on content creation, media planning, brand positioning, and digital marketing to help you maximize your multimedia investments and achieve your communication goals.</p>
+            </div>
+            <div class="service-card">
+                <h3>Live Streaming & Event Coverage</h3>
+                <p>Professional live streaming services and comprehensive event documentation for conferences, product launches, weddings, and corporate gatherings.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="portfolio" class="portfolio-section">
+        <h2>Our Work</h2>
+        <div class="portfolio-content">
+            <p>Innet Media Concept has successfully delivered multimedia projects for clients across various sectors in Nigeria. Our portfolio includes corporate videos for leading Nigerian companies, engaging social media campaigns, stunning event coverage, professional photography for brands and individuals, and creative animation projects that have helped our clients achieve their communication objectives. Each project reflects our commitment to quality, creativity, and understanding of the Nigerian market. We take pride in transforming our clients' visions into visual realities that exceed expectations and deliver measurable results.</p>
+            <img src="https://images.pexels.com/photos/25809226/pexels-photo-25809226.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" alt="Portfolio Showcase" class="portfolio-image">
+        </div>
+    </section>
+
+    <section id="why-choose-us">
+        <h2>Why Choose Innet Media Concept</h2>
+        <div class="why-grid">
+            <div class="why-card">
+                <h3>Proven Expertise</h3>
+                <p>Our team brings years of multimedia production experience and deep understanding of the Nigerian market, ensuring content that resonates with local and international audiences.</p>
+            </div>
+            <div class="why-card">
+                <h3>End-to-End Solutions</h3>
+                <p>From concept development to final delivery, we handle every aspect of your multimedia project with professionalism and attention to detail.</p>
+            </div>
+            <div class="why-card">
+                <h3>Cutting-Edge Technology</h3>
+                <p>We invest in the latest equipment and software to deliver broadcast-quality content that meets international standards.</p>
+            </div>
+            <div class="why-card">
+                <h3>Client-Centered Approach</h3>
+                <p>Your vision drives our creativity. We listen carefully, collaborate closely, and deliver solutions that align perfectly with your goals and budget.</p>
+            </div>
+            <div class="why-card">
+                <h3>Fast Turnaround</h3>
+                <p>We understand the importance of deadlines and work efficiently to deliver your projects on time without compromising quality.</p>
+            </div>
+            <div class="why-card">
+                <h3>Competitive Pricing</h3>
+                <p>Quality multimedia services at rates that make sense for Nigerian businesses, with transparent pricing and no hidden costs.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="process">
+        <h2>Our Process</h2>
+        <div class="process-container">
+            <div class="process-step">
+                <h3>1. Discovery & Consultation</h3>
+                <p>We begin with a detailed consultation to understand your objectives, target audience, brand identity, and project requirements. This foundation ensures we're aligned with your vision from the start.</p>
+            </div>
+            <div class="process-step">
+                <h3>2. Concept Development</h3>
+                <p>Our creative team develops concepts, storyboards, and proposals that bring your ideas to life. We present options and refine based on your feedback until we achieve the perfect approach.</p>
+            </div>
+            <div class="process-step">
+                <h3>3. Production</h3>
+                <p>With approved concepts, our production team executes with precision. Whether filming, shooting, or designing, we maintain the highest standards of quality and professionalism throughout.</p>
+            </div>
+            <div class="process-step">
+                <h3>4. Post-Production & Review</h3>
+                <p>We edit, refine, and polish your content, incorporating your feedback at key review stages to ensure the final product exceeds expectations.</p>
+            </div>
+            <div class="process-step">
+                <h3>5. Delivery & Support</h3>
+                <p>We deliver your completed project in your required formats and provide ongoing support to ensure successful implementation and maximum impact.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="contact-section">
+        <h2>Get In Touch</h2>
+        <div class="contact-content">
+            <p>Ready to elevate your brand with professional multimedia services? Let's discuss your project and create something extraordinary together. Contact Innet Media Concept today for a free consultation and discover how we can help you tell your story in the most compelling way.</p>
+            <p>Whether you need video production, photography, graphic design, animation, or strategic media consultancy, we're here to deliver solutions that exceed your expectations. Reach out to us by phone or WhatsApp, and let's start transforming your ideas into visual reality.</p>
+            <div class="contact-methods">
+                <a href="tel:+2348062864218" class="contact-method">📞 Call Us</a>
+                <a href="mailto:info@innetmediaconcept.com" class="contact-method">✉️ Email Us</a>
+                <a href="https://wa.me/2348062864218" class="contact-method" target="_blank">💬 WhatsApp</a>
+            </div>
+        </div>
+    </section>
+
+    <a href="https://wa.me/2348062864218" class="whatsapp-float" target="_blank">💬</a>
+
+    <footer>
+        <p>&copy; 2024 Innet Media Concept. All rights reserved.</p>
+    </footer>
+
+    <script>
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const mobileMenu = document.querySelector('.mobile-menu');
+
+        if (mobileMenuBtn && mobileMenu) {
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileMenuBtn.classList.toggle('active');
+                mobileMenu.classList.toggle('active');
+            });
+
+            const mobileLinks = mobileMenu.querySelectorAll('a');
+            mobileLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenuBtn.classList.remove('active');
+                    mobileMenu.classList.remove('active');
+                });
+            });
+        }
+    </script>
+</body>
+</html>
